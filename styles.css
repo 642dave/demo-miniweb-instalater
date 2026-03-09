@@ -1,0 +1,747 @@
+/* ==========================================================================
+   Hodinový manžel — styles.css (production-ready)
+   Tech: Vanilla CSS, semantic HTML
+   Notes:
+   - Keep this file as the single source of truth (avoid duplicates elsewhere).
+   - Organized top-to-bottom by layout: tokens → base → header → components → sections.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1) Design tokens (colors, spacing, typography, elevation)
+   -------------------------------------------------------------------------- */
+:root{
+  /* Colors */
+  --bg: #ffffff;
+  --surface: #f7f7f8;
+  --text: #111111;
+  --muted: #5b5b5b;
+  --border: #e5e5e7;
+
+  /* Brand / accents */
+  --accent: #2563eb;      /* primary (trustworthy blue) */
+  --accent-2: #22c55e;    /* secondary (success / highlight) */
+
+  /* Radius & shadow */
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(0,0,0,.06);
+
+  /* Layout */
+  --container: 1040px;
+
+  /* Spacing scale */
+  --space-1: 8px;
+  --space-2: 12px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 72px;
+}
+
+
+/* --------------------------------------------------------------------------
+   2) Base / reset
+   -------------------------------------------------------------------------- */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body{
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* Subtle modern background (safe, not too loud) */
+body{
+  background:
+    radial-gradient(900px 500px at 12% 0%, rgba(0,0,0,0.05), transparent 60%),
+    radial-gradient(700px 420px at 85% 10%, rgba(0,0,0,0.04), transparent 55%),
+    var(--bg);
+}
+
+a{
+  color: var(--text);
+  text-decoration: none;
+}
+
+a:hover{
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.container{
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+
+/* --------------------------------------------------------------------------
+   3) Accessibility helpers
+   -------------------------------------------------------------------------- */
+/* Skip link for keyboard users */
+.skip-link{
+  position: absolute;
+  left: -999px;
+  top: 0;
+}
+
+.skip-link:focus{
+  left: var(--space-4);
+  top: var(--space-4);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 10px;
+}
+
+/* Consistent focus ring */
+.btn:focus-visible,
+.site-nav a:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+textarea:focus-visible{
+  outline: 3px solid rgba(17,17,17,.25);
+  outline-offset: 2px;
+}
+
+
+/* --------------------------------------------------------------------------
+   4) Typography
+   -------------------------------------------------------------------------- */
+h1, h2, h3{
+  line-height: 1.15;
+  margin: 0 0 var(--space-3);
+}
+
+h1{
+  font-size: clamp(32px, 4vw, 48px);
+  letter-spacing: -0.02em;
+}
+
+h2{
+  font-size: clamp(22px, 2.6vw, 30px);
+  letter-spacing: -0.01em;
+  position: relative;
+}
+
+/* Section title underline (brand-tinted) */
+h2::after{
+  content: "";
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin-top: 12px;
+  border-radius: 999px;
+  background: rgba(37,99,235,.35);
+}
+
+h3{ font-size: 18px; }
+
+p{
+  margin: 0 0 var(--space-3);
+  color: var(--text);
+}
+
+.hero__lead,
+.hint,
+.hero__note,
+.brand__region{
+  color: var(--muted);
+}
+
+
+/* --------------------------------------------------------------------------
+   5) Sections (layout rhythm)
+   -------------------------------------------------------------------------- */
+section{
+  padding: var(--space-7) 0;
+  border-top: 1px solid var(--border);
+}
+
+
+/* --------------------------------------------------------------------------
+   6) Header / navigation
+   -------------------------------------------------------------------------- */
+.site-header{
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,.86);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+}
+
+.site-header .container{
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-3);
+  padding-bottom: var(--space-3);
+}
+
+.brand__name{
+  font-weight: 650;
+  margin: 0;
+}
+
+.brand__region{
+  margin: 0;
+  font-size: 14px;
+}
+
+.site-nav{
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.site-nav a{
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.site-nav a:hover{
+  background: var(--surface);
+  text-decoration: none;
+}
+
+/* CTA-like nav link */
+.site-nav .nav-cta{
+  border: 1px solid rgba(37,99,235,.25);
+  background: rgba(255,255,255,.6);
+}
+
+.site-nav .nav-cta:hover{
+  background: rgba(37,99,235,.08);
+}
+
+
+/* --------------------------------------------------------------------------
+   7) Buttons
+   -------------------------------------------------------------------------- */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform .12s ease, filter .12s ease, background .12s ease, box-shadow .12s ease;
+}
+
+/* Primary (brand) */
+.btn--primary{
+  background: linear-gradient(180deg, rgba(37,99,235,1) 0%, rgba(30,64,175,1) 100%);
+  color: var(--bg);
+  border-color: rgba(30,64,175,1);
+  box-shadow: 0 12px 26px rgba(37,99,235,.25);
+}
+
+.btn--primary:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+  text-decoration: none;
+}
+
+/* Secondary / ghost */
+.btn--secondary{
+  background: var(--bg);
+  color: var(--text);
+}
+
+.btn--secondary:hover{
+  background: var(--surface);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   8) Cards & shared panels
+   -------------------------------------------------------------------------- */
+.card,
+.benefit,
+.price-card,
+.testimonial{
+  background: rgba(255,255,255,.75);
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.06),
+    0 1px 0 rgba(255,255,255,.6) inset;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+/* Subtle top highlight bar */
+.card::before,
+.benefit::before,
+.price-card::before,
+.testimonial::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(37,99,235,.9), rgba(34,197,94,.7));
+}
+
+/* Hover lift for desktop */
+.benefit:hover,
+.price-card:hover,
+.testimonial:hover{
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 45px rgba(0,0,0,.08),
+    0 1px 0 rgba(255,255,255,.7) inset;
+}
+
+
+/* --------------------------------------------------------------------------
+   9) HERO — FINAL (two-column layout with <img>)
+   -------------------------------------------------------------------------- */
+.hero{
+  position: relative;
+  border-top: none;
+  padding: clamp(2.5rem, 4.5vw, 4.25rem) 0;
+  overflow: hidden;
+}
+
+/* Additional hero-only background layer (kept subtle) */
+.hero::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(600px 300px at 20% 20%, rgba(0,0,0,.06), transparent 60%),
+    radial-gradient(520px 320px at 80% 10%, rgba(0,0,0,.04), transparent 55%);
+  pointer-events: none;
+}
+
+.hero .container{
+  position: relative;
+}
+
+/* Make hero slightly wider than the rest (so image can be truly large) */
+.hero .container{
+  max-width: 1200px;
+}
+
+.hero__grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: center;
+}
+
+@media (min-width: 900px){
+  .hero__grid{
+    grid-template-columns: 1fr minmax(520px, 620px);
+  }
+}
+
+.hero__content h1{
+  margin: 0 0 0.75rem 0;
+  line-height: 1.1;
+}
+
+.hero__content p{
+  margin: 0 0 1.25rem 0;
+  max-width: 56ch;
+}
+
+.hero__actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: var(--space-4);
+  margin-bottom: 1rem;
+}
+
+/* Trust line under CTA */
+.hero__trust{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.hero__trust li{
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.hero__trust li::before{
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* Image panel */
+.hero__media{
+  justify-self: end;
+  border-radius: 22px;
+  overflow: hidden;
+  background: rgba(0,0,0,.04);
+  box-shadow: 0 18px 45px rgba(0,0,0,.10);
+}
+
+.hero__media img{
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* Optional soft glow (premium but subtle) */
+.hero__media{
+  position: relative;
+}
+
+.hero__media::before{
+  content:"";
+  position:absolute;
+  inset:-18px;
+  background: radial-gradient(circle at 30% 30%, rgba(37,99,235,.14), transparent 55%);
+  filter: blur(10px);
+  z-index: 0;
+}
+
+.hero__media img{
+  position: relative;
+  z-index: 1;
+}
+
+/* Mobile stacking */
+@media (max-width: 900px){
+  .hero__media{
+    justify-self: stretch;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   10) Grids (benefits / pricing / testimonials)
+   -------------------------------------------------------------------------- */
+.benefits__grid,
+.pricing__grid,
+.testimonials__grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+@media (min-width: 860px){
+  .benefits__grid,
+  .pricing__grid,
+  .testimonials__grid{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   11) Services list (nice bullets)
+   -------------------------------------------------------------------------- */
+.services__list{
+  list-style: none;
+  padding-left: 0;
+  margin: var(--space-3) 0 0;
+}
+
+.services__list li{
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.services__list li::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(37,99,235,.8);
+  box-shadow: 0 0 0 4px rgba(37,99,235,.12);
+}
+
+.hint{
+  margin-top: var(--space-4);
+}
+
+
+/* --------------------------------------------------------------------------
+   12) Process
+   -------------------------------------------------------------------------- */
+.process__steps{
+  list-style: none;
+  padding: 0;
+  margin: var(--space-4) 0 0;
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (min-width: 860px){
+  .process__steps{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.process__steps li{
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  background: var(--bg);
+}
+
+
+/* --------------------------------------------------------------------------
+   13) Pricing (emphasize the price)
+   -------------------------------------------------------------------------- */
+.price{
+  font-size: 22px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-3);
+  color: var(--accent);
+}
+
+
+/* --------------------------------------------------------------------------
+   14) FAQ
+   -------------------------------------------------------------------------- */
+.faq__items{
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+details{
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg);
+}
+
+summary{
+  cursor: pointer;
+  font-weight: 650;
+}
+
+details p{
+  margin-top: var(--space-2);
+  color: var(--muted);
+}
+
+details[open]{
+  box-shadow: 0 12px 28px rgba(0,0,0,.06);
+}
+
+
+/* --------------------------------------------------------------------------
+   15) Contact form
+   -------------------------------------------------------------------------- */
+.contact-form{
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  max-width: 560px;
+}
+
+label{
+  display: grid;
+  gap: 8px;
+  font-weight: 600;
+}
+
+input, textarea{
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  font: inherit;
+}
+
+textarea{
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-note{
+  margin: 0;
+  color: var(--muted);
+}
+
+.form-success{
+  color: #1a7f37;
+}
+
+/* --------------------------------------------------------------------------
+   Footer (clean, neutral, portfolio-safe)
+   -------------------------------------------------------------------------- */
+
+.site-footer{
+  border-top: 1px solid var(--border);
+  padding: var(--space-5) 0;
+  background: rgba(255,255,255,.6);
+}
+
+.site-footer__inner{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+}
+
+.site-footer__meta{
+  margin: 0;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.site-footer__copyright{
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------------------
+   17) Reduced motion (accessibility)
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  .btn,
+  .benefit,
+  .price-card,
+  .testimonial{
+    transition: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile navigation (hamburger)
+   -------------------------------------------------------------------------- */
+
+/* Ensure header inner layout is stable */
+.site-header__inner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+/* Hamburger button (hidden on desktop) */
+.nav-toggle{
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.8);
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.nav-toggle:hover{
+  background: var(--surface);
+}
+
+.nav-toggle__bar{
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 99px;
+}
+
+/* Desktop nav stays inline */
+.site-nav{
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Mobile behavior */
+@media (max-width: 820px){
+  .nav-toggle{
+    display: inline-flex;
+  }
+
+  /* Turn nav into a dropdown panel */
+  .site-nav{
+    position: absolute;
+    top: calc(100% + 10px);
+    right: var(--space-4);
+    left: var(--space-4);
+    display: none;                 /* hidden by default */
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,.08);
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 18px 45px rgba(0,0,0,.10);
+    z-index: 50;
+  }
+
+  .site-header{
+    position: sticky;
+  }
+
+  /* We need a positioning context for the dropdown */
+  .site-header .container{
+    position: relative;
+  }
+
+  .site-nav a{
+    padding: 12px 12px;
+    border-radius: 12px;
+  }
+
+  .site-nav a:hover{
+    background: rgba(37,99,235,.08);
+    text-decoration: none;
+  }
+
+  /* When menu is open */
+  .site-nav.is-open{
+    display: flex;
+  }
+
+  /* CTA button-like link full width */
+  .site-nav .nav-cta{
+    text-align: center;
+  }
+}
+
