@@ -1,4 +1,4 @@
-# Demo miniweb – Hodinový manžel
+# Demo miniweb – Instalat0r
 
 Ukázkový jednostránkový web (landing page) vytvořený pro portfolio účely.  
 Slouží jako demonstrace, jak může vypadat moderní miniweb pro lokální službu
