@@ -1,11 +1,11 @@
-# Demo miniweb – Instalat0r
+# Demo miniweb – Instalatér
 
 Ukázkový jednostránkový web (landing page) vytvořený pro portfolio účely.  
 Slouží jako demonstrace, jak může vypadat moderní miniweb pro lokální službu
 (se zaměřením na přehlednost, důvěru a rychlý kontakt).
 
 ## Live demo
-https://642dave.github.io/demo-miniweb-hodinovy-manzel/
+https://642dave.github.io/demo-miniweb-instalater/
 
 ## Features
 - Moderní hero sekce s CTA a důvěryhodnostními prvky
